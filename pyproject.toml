@@ -15,3 +15,6 @@ known_third_party = "kedro"
 addopts = """
 --cov-report term-missing \
 --cov src/kedro_devops -ra"""
+
+[too.mypy]
+ignore_missing_imports = true

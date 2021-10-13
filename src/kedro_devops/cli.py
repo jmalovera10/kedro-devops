@@ -39,6 +39,7 @@ from kedro.framework.cli.utils import (
     _reformat_load_versions,
     _split_params,
     env_option,
+    python_call,
     split_string,
 )
 from kedro.framework.session import KedroSession
@@ -168,3 +169,33 @@ def run(
             load_versions=load_version,
             pipeline_name=pipeline,
         )
+
+
+@cli.command()
+def lint() -> None:
+    """
+    Linting function that makes static code analysis for the project
+    when executing "kedro lint"
+    """
+    separator = "-" * 20
+
+    print(f"{separator}\nRunning Black...\n{separator}")
+    python_call("black", ["."])
+
+    print(f"{separator}\nRunning isort...\n{separator}")
+    python_call("isort", ["src/kedro_devops", "src/tests"])
+
+    print(f"{separator}\nRunning flake8...\n{separator}")
+    python_call("flake8", ["src/kedro_devops"])
+
+    print(f"{separator}\nRunning pydocstyle...\n{separator}")
+    python_call(
+        "pydocstyle",
+        ["src/kedro_devops/pipelines", "src/kedro_devops/common"],
+    )
+
+    print(f"{separator}\nRunning mypy...\n{separator}")
+    python_call(
+        "mypy",
+        ["src/kedro_devops/pipelines", "src/kedro_devops/common", "src/tests"],
+    )

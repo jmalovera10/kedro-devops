@@ -37,7 +37,13 @@ from kedro.pipeline import Pipeline, node
 from .nodes import split_data
 
 
-def create_pipeline(**kwargs):
+def create_pipeline(**kwargs) -> Pipeline:
+    """
+    Create a pipeline for data engineering.
+
+    Returns:
+        Pipeline: the data engineering pipeline.
+    """
     return Pipeline(
         [
             node(
