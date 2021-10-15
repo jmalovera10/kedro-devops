@@ -8,10 +8,10 @@ jobs:
       - uses: s-weigand/setup-conda@v1
         with:
           python-version: 3.7.9
-      - name: Install pywin32
-        run: pip install pypiwin32
+      - name: Install kedro
+        run: pip install kedro==0.17.5
       - name: Install dependencies
-        run: pip install -r src/requirements.txt
+        run: kedro install
       - name: Run linting
         run: kedro run lint
 
