@@ -2,7 +2,7 @@ name: DevOpsPipeline
 on: [push]
 jobs:
   lint-project:
-    runs-on: ubuntu-18.04
+    runs-on: latest
     steps:
       - uses: actions/checkout@v2
       - uses: s-weigand/setup-conda@v1
@@ -16,3 +16,36 @@ jobs:
           pip install -r src/requirements.txt
       - name: Run linting
         run: kedro lint
+
+  test-project:
+    runs-on: latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: s-weigand/setup-conda@v1
+        with:
+          python-version: 3.7.9
+      - name: Install kedro
+        run: pip install kedro==0.17.5
+      - name: Install dependencies
+        run: |
+          kedro build-reqs
+          pip install -r src/requirements.txt
+      - name: Run test
+        run: kedro test
+
+  build-project:
+    runs-on: latest
+    needs: [lint-project, test-project]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: s-weigand/setup-conda@v1
+        with:
+          python-version: 3.7.9
+      - name: Install kedro
+        run: pip install kedro==0.17.5
+      - name: Install dependencies
+        run: |
+          kedro build-reqs
+          pip install -r src/requirements.txt
+      - name: Run build
+        run: kedro package
