@@ -11,7 +11,7 @@ jobs:
       - name: Install kedro
         run: pip install kedro==0.17.5
       - name: Install dependencies
-        run: kedro install
+        run: kedro install --build-reqs
       - name: Run linting
         run: kedro run lint
 
