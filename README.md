@@ -1,3 +1,5 @@
+![example branch parameter](https://github.com/github/ElCuboNegro/kedro-devops/workflows/pipeline.yml/badge.svg?branch=main)
+
 # kedro-devops
 
 This project intends to demonstrate and define a Dev(ML)Ops pipeline for Kedro
