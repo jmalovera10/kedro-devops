@@ -1,0 +1,18 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+    -   id: check-yaml
+    -   id: check-json
+    -   id: check-ast
+    -   id: check-docstring-first
+    -   id: name-tests-test
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+    -   id: detect-private-key
+    -   id: fix-encoding-pragma
+    -   id: requirements-txt-fixer
+-   repo: https://github.com/psf/black
+    rev: 21.9b0
+    hooks:
+    -   id: black

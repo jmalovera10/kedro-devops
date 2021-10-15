@@ -11,12 +11,13 @@ kedro-telemetry~=0.1.0
 mypy~=0.910
 nbstripout~=0.4
 pandas-stubs
+pre-commit==2.15.0
 pydocstyle~=6.1.1
 pytest-cov~=2.5
 pytest-mock>=1.7.1, <2.0
 pytest~=6.2
-types-atomicwrites 
-types-cachetools 
-types-setuptools 
+types-atomicwrites
+types-cachetools
+types-setuptools
 types-toml
 wheel>=0.35, <0.37
