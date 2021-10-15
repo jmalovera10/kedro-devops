@@ -197,5 +197,5 @@ def lint() -> None:
     print(f"{separator}\nRunning mypy...\n{separator}")
     python_call(
         "mypy",
-        ["src/kedro_devops/pipelines", "src/kedro_devops/common", "src/tests"],
+        ["src/kedro_devops/pipelines", "src/tests"],
     )
