@@ -2,7 +2,7 @@ name: DevOpsPipeline
 on: [push]
 jobs:
   lint-project:
-    runs-on: ubuntu-18.84
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - uses: s-weigand/setup-conda@v1
@@ -14,5 +14,5 @@ jobs:
         run: |
           kedro build-reqs
           pip install -r src/requirements.txt
-      - name: Run lint
+      - name: Run linting
         run: kedro lint
