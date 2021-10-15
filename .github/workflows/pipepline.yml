@@ -15,7 +15,7 @@ jobs:
           kedro build-reqs
           pip install -r src/requirements.txt
       - name: Run linting
-        run: kedro run lint
+        run: kedro lint
 
   test-project:
     runs-on: ubuntu-latest
