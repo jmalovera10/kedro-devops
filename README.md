@@ -1,4 +1,4 @@
-![example branch parameter](https://github.com/github/ElCuboNegro/kedro-devops/workflows/pipeline.yml/badge.svg?branch=main)
+![example branch parameter](https://github.com/elcubonegro/kedro-devops/actions/workflows/pipeline.yml/badge.svg?branch=main)
 
 # kedro-devops
 
