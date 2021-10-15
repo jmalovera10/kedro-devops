@@ -8,8 +8,6 @@ jobs:
       - uses: s-weigand/setup-conda@v1
         with:
           python-version: 3.7.9
-      - name: Install pywin32
-        run: conda install -c anaconda pywin32
       - name: Install dependencies
         run: pip install -r src/requirements.txt
       - name: Run linting
