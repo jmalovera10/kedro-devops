@@ -1,0 +1,19 @@
+name: DevOpsPipeline
+on: [push]
+jobs:
+  lint-project:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        python-version: ["pypy-3.7"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: pip install -r src/requirements.txt
+      - name: Run linting
+        run: kedro run lint
