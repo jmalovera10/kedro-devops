@@ -34,7 +34,7 @@ jobs:
         run: kedro test
 
   build-project:
-    runs-on: latest
+    runs-on: ubuntu-latest
     needs: [lint-project, test-project]
     steps:
       - uses: actions/checkout@v2
