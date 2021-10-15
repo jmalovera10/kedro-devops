@@ -235,6 +235,8 @@ packaging==21.0
     #   jupyterlab
     #   jupyterlab-server
     #   pytest
+pandas-stubs==1.2.0.29
+    # via -r C:\Users\juanm\Documents\Sumz\kedro-devops\src\requirements.in
 pandas==1.3.3
     # via kedro
 pandocfilters==1.5.0
@@ -396,6 +398,14 @@ typed-ast==1.4.3
     # via
     #   black
     #   mypy
+types-atomicwrites==1.4.1
+    # via -r C:\Users\juanm\Documents\Sumz\kedro-devops\src\requirements.in
+types-cachetools==4.2.4
+    # via -r C:\Users\juanm\Documents\Sumz\kedro-devops\src\requirements.in
+types-setuptools==57.4.2
+    # via -r C:\Users\juanm\Documents\Sumz\kedro-devops\src\requirements.in
+types-toml==0.10.1
+    # via -r C:\Users\juanm\Documents\Sumz\kedro-devops\src\requirements.in
 typing-extensions==3.10.0.2
     # via
     #   anyio
@@ -404,6 +414,7 @@ typing-extensions==3.10.0.2
     #   gitpython
     #   importlib-metadata
     #   mypy
+    #   pandas-stubs
 urllib3==1.26.7
     # via
     #   requests
