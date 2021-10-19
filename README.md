@@ -8,13 +8,13 @@ This project intends to demonstrate and define a Dev(ML)Ops pipeline for Kedro
 To install de project you must have [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) and setup a Python3.7 environment as follows:
 
 ```bash
-conda create --name Aldebaran-Learning python=3.7 -y
+conda create --name Aldebaran_Learning python=3.7 -y
 ```
 
 Then you need to activate your virtualenv
 
 ```bash
-conda activate Aldebaran-Learning
+conda activate Aldebaran_Learning
 ```
 > Note: if you are using windows you may need to use a cmd shell instead of a powershell to activate a conda environment
 
