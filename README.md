@@ -3,28 +3,54 @@
 # kedro-devops
 
 This project intends to demonstrate and define a Dev(ML)Ops pipeline for Kedro
-
 ## Setup
 
 To install de project you must have [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) and setup a Python3.7 environment as follows:
 
 ```bash
-conda create --name kedro-devops python=3.7 -y
+conda create --name Aldebaran-Learning python=3.7 -y
 ```
 
 Then you need to activate your virtualenv
 
 ```bash
-conda activate kedro-devops
+conda activate Aldebaran-Learning
+```
+> Note: if you are using windows you may need to use a cmd shell instead of a powershell to activate a conda environment
+
+Init the git flow
+
+```bash
+git clone -b master git@github.com:elcubonegro/gitflow-avh.git
+cd gitflow-avh
+make && make install
 ```
 
-> Note: if you are using windows you may need to use a cmd shell instead of a powershell to activate a conda environment
+Init the git pre-commit hooks
+
+```bash
+conda activate Aldebaran-Learning
+```
+
+After that initialize the local gitflow repository with gitflow itself:
+
+```bash
+git flow init -d
+git flow feature start <your feature>
+```
+
+Then, do work and commit your changes.
+
+```bash
+git flow feature publish <your feature>
+When done, open a pull request to your feature branch.
+```
 
 ## Overview
 
-This is your new Kedro project, which was generated using `Kedro 0.17.5`.
+this is a Kedro project, builded using `Kedro 0.17.5`.
 
-Take a look at the [Kedro documentation](https://kedro.readthedocs.io) to get started.
+For more information please reffer to [Kedro documentation](https://kedro.readthedocs.io).
 
 ## Rules and guidelines
 
