@@ -49,3 +49,4 @@ jobs:
           pip install -r src/requirements.txt
       - name: Run build
         run: kedro package
+
