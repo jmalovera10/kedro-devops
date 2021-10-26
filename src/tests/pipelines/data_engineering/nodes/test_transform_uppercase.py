@@ -10,6 +10,6 @@ class TestTransformUppercase:
         """
         should return a upper case string for a string dataframe
         """
-        t_dataframe = pd.DataFrame({"names": ["juan", "manuel", "alberto"]})
+        t_dataframe = pd.DataFrame({"names": ["foo", "bar", "baz"]})
         output = transform_uppercase(t_dataframe)
-        assert output.equals(pd.DataFrame({"names": ["JUAN", "MANUEL", "ALBERTO"]}))
+        assert output.equals(pd.DataFrame({"names": ["FOO", "BAR", "BAZ"]}))
