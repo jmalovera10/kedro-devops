@@ -2,9 +2,24 @@
 
 In this exercise you will learn how to develop a CI pipeline that executes linting, testing, and building using GitHub actions.
 
+## Objectives
+
+- Configure a CI/CD provider
+- Setup a linting stage
+- Develop unit tests
+- Setup a testing stage
+- Setup a build stage
+- Setup a pipeline to run all stages
+
 ## Prerequisites
 
-To develop this exercise you should have done the [setup steps in the README.md](../../README.md)
+If you intend to replicate this exercise as it is, I encourage you to [fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repo to your account.
+
+To develop this exercise you should have done the [setup steps in the README.md](../../README.md). Then you must **checkout to the exercise branch named** `exercises/01-ci-pipeline` using
+
+```bash
+git checkout exercises/01-ci-pipeline
+```
 
 ## Exercise
 
@@ -92,3 +107,7 @@ Now we will implement this command in our pipeline to validate that our code is 
    - **lint-project:** is the name of the job that is responsible for linting our code
    - **runs-on:** this clause specifies the type of machine in which our job is going to run. GitHub actions offer different OS such as Ubuntu, Windows and MacOS
    - **steps:** under this clause we define all the steps that our job is supposed to do
+   - **uses:** is the import of an external step that is already defined in GitHub actions. In this case we are using the `checkout` step that is responsible for checking out the code from GitHub
+   - **named steps:** these steps are in charge of doing the linting of our code. In this case we are using the `lint` step that is defined in the `src/kedro_devops/cli.py` file
+
+### Creating a testing step
