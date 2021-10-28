@@ -8,7 +8,6 @@ logs/
 .ipython/
 docs/
 notebooks/
-src/
 .coveragerc
 .gitignore
 .isort.cfg

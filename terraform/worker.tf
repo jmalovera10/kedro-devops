@@ -2,11 +2,10 @@ data "google_service_account" "default_compute_sa" {
   account_id = "114141047980381842642"
 }
 
-resource "google_compute_instance" "mp_backend" {
-  name                      = "mp-backend"
+resource "google_compute_instance" "worker" {
+  name                      = "worker"
   machine_type              = "e2-micro"
   allow_stopping_for_update = true
-  zone                      = google.zone
 
   tags = ["fliipa-backend", "web-application"]
 
