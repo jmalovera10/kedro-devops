@@ -8,11 +8,11 @@ jobs:
       - uses: s-weigand/setup-conda@v1
         with:
           python-version: 3.7.9
-      - name: Install kedro
-        run: pip install kedro==0.17.5
+      - name: Install pip-tools
+        run: pip install pip-tools
       - name: Install dependencies
         run: |
-          kedro build-reqs
+          pip-compile src/requirements.in --output-file src/requirements.txt
           pip install -r src/requirements.txt
       - name: Run linting
         run: kedro lint
@@ -24,11 +24,11 @@ jobs:
       - uses: s-weigand/setup-conda@v1
         with:
           python-version: 3.7.9
-      - name: Install kedro
-        run: pip install kedro==0.17.5
+      - name: Install pip-tools
+        run: pip install pip-tools
       - name: Install dependencies
         run: |
-          kedro build-reqs
+          pip-compile src/requirements.in --output-file src/requirements.txt
           pip install -r src/requirements.txt
       - name: Run test
         run: kedro test
@@ -41,11 +41,11 @@ jobs:
       - uses: s-weigand/setup-conda@v1
         with:
           python-version: 3.7.9
-      - name: Install kedro
-        run: pip install kedro==0.17.5
+      - name: Install pip-tools
+        run: pip install pip-tools
       - name: Install dependencies
         run: |
-          kedro build-reqs
+          pip-compile src/requirements.in --output-file src/requirements.txt
           pip install -r src/requirements.txt
       - name: Run build
         run: kedro package

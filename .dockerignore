@@ -14,3 +14,5 @@ notebooks/
 pyproject.toml
 README.md
 setup.cfg
+dist/
+requirements.txt
