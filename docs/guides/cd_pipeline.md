@@ -27,7 +27,67 @@ git checkout exercises/02-cd-pipeline
 
 ## Exercise
 
-Add the following dependency to `src/requirements.in`
+Add the following catalogs to your `conf/base/catalog.yml` file
+
+```yaml
+pokeapi:
+  type: api.APIDataSet
+  url: https://pokeapi.co/api/v2/pokemon
+  params:
+    limit: 100000
+    offset: 0
+    format: json
+
+pokemons:
+  type: pandas.ParquetDataSet
+  filepath: data/01_raw/pokemons.parquet
+```
+
+Then add the following code to your `src/kedro_devops/pipelines/data_engineering/nodes/transform_uppercase.py` file
+
+```python
+import pandas as pd
+from requests import Response
+
+
+def transform_uppercase(data_set: Response) -> pd.DataFrame:
+    """
+    Transform a lowercase dataframe to uppercase.
+
+    Args:
+        data_set (APIDataSet): A raw api request
+
+    Returns:
+        pd.DataFrame: An uppercase dataframe
+    """
+    json_data = data_set.json()
+    pokemons = json_data.get("results")
+    data = pd.json_normalize(pokemons)
+    return data.applymap(lambda x: x.upper())
+
+```
+
+This will process the [pokemon api](https://pokeapi.co/) data and transform it to uppercase. After this, we need to add a node to our pipeline that uses the modified `transform_uppercase` function and the catalogs that we added to the `conf/base/catalog.yml` file. To do this we need to open the `src/kedro_devops/pipelines/data_engineering/pipeline.py` file and add the following code:
+
+```python
+...
+def create_pipeline(**kwargs) -> Pipeline:
+    """
+    Create a pipeline for data engineering.
+
+    Returns:
+        Pipeline: the data engineering pipeline.
+    """
+    return Pipeline([
+        Node(
+            transform_uppercase,
+            inputs="pokeapi",
+            outputs="pokemons",
+            name="pokemons_uppercase")
+    ])
+```
+
+Now that we have our pipeline, we need to add the following dependency to `src/requirements.in` to allow us to build and run the image locally.
 
 ```properties
 ...
@@ -93,4 +153,16 @@ Then build a container using the following command:
 
 ```bash
 kedro docker build
+```
+
+After the container is built, we can run it locally using the Docker interface or by using the following command:
+
+```bash
+docker run -d --name kedro_devops kedro-devops
+```
+
+If you want to debug your running container you can do it from the Docker interface or by executing this command:
+
+```bash
+docker exec -it kedro_devops /bin/bash
 ```

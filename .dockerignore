@@ -2,7 +2,6 @@
 .git
 .env
 airflow_settings.yaml
-logs/
 
 # All Kedro project files, except data/ and conf/
 .ipython/
@@ -14,5 +13,7 @@ notebooks/
 pyproject.toml
 README.md
 setup.cfg
-dist/
-requirements.txt
+src/requirements.txt
+src/dist/
+src/build/
+terraform/

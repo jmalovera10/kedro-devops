@@ -5,7 +5,7 @@ isort~=5.0
 jupyter~=1.0
 jupyter_client>=5.1, <7.0
 jupyterlab~=3.0
-kedro[pandas.CSVDataSet]==0.17.5
+kedro[pandas.ParquetDataset]==0.17.5
 kedro-airflow~=0.4
 kedro-docker
 kedro-telemetry~=0.1.0
@@ -18,6 +18,7 @@ pytest-mock>=1.7.1, <2.0
 pytest~=6.2
 types-atomicwrites 
 types-cachetools 
+types-requests 
 types-setuptools 
 types-toml
 wheel>=0.35, <0.37
