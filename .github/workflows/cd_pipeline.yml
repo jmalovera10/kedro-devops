@@ -51,4 +51,3 @@ jobs:
           registry: us.gcr.io
           project_id: sumz-laboratorios
           image_name: kedro-devops
-          image_tag: ${{ steps.get_tag_name.outputs.GIT_TAG_NAME}}

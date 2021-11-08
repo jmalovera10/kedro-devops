@@ -1,5 +1,4 @@
 import pandas as pd
-import json
 from requests.models import Response
 from pytest import MonkeyPatch
 
