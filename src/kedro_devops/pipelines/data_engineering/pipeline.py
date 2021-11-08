@@ -47,8 +47,8 @@ def create_pipeline(**kwargs) -> Pipeline:
     """
     return Pipeline([
         Node(
-            transform_uppercase, 
-            inputs="pokeapi", 
-            outputs="pokemons", 
+            transform_uppercase,
+            inputs="pokeapi",
+            outputs="pokemons",
             name="pokemons_uppercase")
     ])
