@@ -12,16 +12,15 @@ class TestTransformUppercase:
         """
         should return a upper case string for a string dataframe
         """
+
         def mock_json():
-            return {"results": [
-                {"data": "test1"},
-                {"data": "test2"},
-                {"data": "test3"}
-                ]}
-      
+            return {
+                "results": [{"data": "test1"}, {"data": "test2"}, {"data": "test3"}]
+            }
+
         t_dataframe = Response()
         monkeypatch.setattr(t_dataframe, "json", mock_json)
-     
+
         output = transform_uppercase(t_dataframe)
 
         assert output.equals(pd.DataFrame({"data": ["TEST1", "TEST2", "TEST3"]}))
