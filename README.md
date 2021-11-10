@@ -47,7 +47,7 @@ This repo is divided into sessions in which you are tasked to develop different 
 In the `main` branch you will find the terminated product of all exercises so feel free to compare your results with it. Below I am going to list the exercises of this repo along with their respective guide:
 
 1. [Develop a CI pipeline](docs/guides/ci_pipeline.md)
-2. Develop a CD pipeline
+2. [Develop a CD pipeline](docs/guides/cd_pipeline.md)
 
 ## Rules and guidelines
 
