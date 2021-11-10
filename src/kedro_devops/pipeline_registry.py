@@ -43,7 +43,4 @@ def register_pipelines() -> Dict[str, Pipeline]:
     """
     data_engineering_pipeline = de.create_pipeline()
 
-    return {
-        "de": data_engineering_pipeline,
-        "__default__": data_engineering_pipeline 
-    }
+    return {"de": data_engineering_pipeline, "__default__": data_engineering_pipeline}
