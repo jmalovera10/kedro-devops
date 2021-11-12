@@ -1,9 +1,9 @@
-name: Continuous Integration Pipeline
-on:
+name: CIPipeline
+on: 
   push:
     branches:
       - "*"
-      - "!main"
+      - "!master"
 jobs:
   lint-project:
     runs-on: ubuntu-latest

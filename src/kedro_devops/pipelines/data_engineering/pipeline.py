@@ -34,8 +34,9 @@ Delete this when you start working on your own Kedro project.
 
 from kedro.pipeline import Pipeline
 from kedro.pipeline.node import Node
-
-from kedro_devops.pipelines.data_engineering.nodes.transform_uppercase import transform_uppercase
+from kedro_devops.pipelines.data_engineering.nodes.transform_uppercase import (
+    transform_uppercase,
+)
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -45,10 +46,13 @@ def create_pipeline(**kwargs) -> Pipeline:
     Returns:
         Pipeline: the data engineering pipeline.
     """
-    return Pipeline([
-        Node(
-            transform_uppercase,
-            inputs="pokeapi",
-            outputs="pokemons",
-            name="pokemons_uppercase")
-    ])
+    return Pipeline(
+        [
+            Node(
+                transform_uppercase,
+                inputs="pokeapi",
+                outputs="pokemons",
+                name="pokemons_uppercase",
+            )
+        ]
+    )
