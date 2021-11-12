@@ -2,7 +2,7 @@ name: CDPipeline
 on: 
   push:
     branches:
-      - master
+      - main
 jobs:
   lint-project:
     runs-on: ubuntu-latest
