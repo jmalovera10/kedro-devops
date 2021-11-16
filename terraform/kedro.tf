@@ -2,12 +2,10 @@ data "google_service_account" "default_compute_sa" {
   account_id = "114141047980381842642"
 }
 
-resource "google_compute_instance" "worker" {
-  name                      = "worker"
+resource "google_compute_instance" "kedro" {
+  name                      = "kedro"
   machine_type              = "e2-micro"
   allow_stopping_for_update = true
-
-  tags = ["fliipa-backend", "web-application"]
 
   boot_disk {
     initialize_params {
@@ -23,16 +21,20 @@ resource "google_compute_instance" "worker" {
     }
   }
 
+  metadata_startup_script = <<EOT
+  echo "Starting image ${var.docker_communications_worker_image_digest}"
+  EOT
+
   metadata = {
     gce-container-declaration = <<EOT
     kind: Deployment
     metadata:
-      name: backend-pod
+      name: kedro-pod
       labels:
-        tier: backend
+        tier: kedro
     spec:
       containers:
-        - name: backend-service
+        - name: kedro-service
           image: ${var.docker_worker_image_digest}
           stdin: false
           restartPolicy: Always

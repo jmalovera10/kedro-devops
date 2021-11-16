@@ -1,3 +1,3 @@
-resource "google_container_registry" "example_registry" {
+resource "google_container_registry" "registry" {
   location = "US"
 }

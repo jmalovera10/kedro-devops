@@ -25,7 +25,7 @@ To develop this exercise you should have done the [setup steps in the README.md]
 git checkout exercises/02-cd-pipeline
 ```
 
-## Exercise 1: Build a Kedro Docker image
+## Exercise 1: Build and publish a Kedro Docker image
 
 ### 1.1: Change Application logic
 
@@ -338,3 +338,22 @@ Then you need to copy the output and add it to your repository secrets in GitHub
 In order for the CD pipeline to run you need to be in the `main` branch and then you need to make a commit and a push to the repository. After this you may see the pipeline execution under the `actions` tab of your repository:
 
 ![cd-pipeline-result](assets/cd-pipeline-result.png)
+
+## Exercise 2: Define and deploy infrastructure as code (IaC) with Terraform
+
+Install Terraform
+Enable GCP Compute Engine API
+Create a main Terraform file
+Terraform init
+Create a new Terraform workspace
+Create a Terraform network reference file
+Create a Terraform kedro file
+Create a Terraform variables file
+Add Compute Instance Admin (v1) role to service account
+- Compute Instance Admin (v1)
+Add devops service account as owner of the compute service account
+Terraform format
+Terraform validate
+Terraform plan
+Terraform apply
+Create Terraform job in pipeline
