@@ -1,5 +1,5 @@
-name: Continuous Integration Pipeline
-on:
+name: CIPipeline
+on: 
   push:
     branches:
       - "*"

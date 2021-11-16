@@ -7,7 +7,7 @@ def transform_uppercase(data_set: Response) -> pd.DataFrame:
     Transform a lowercase dataframe to uppercase.
 
     Args:
-        data_set (APIDataSet): A raw api request
+        data (pd.DataFrame): A raw dataframe
 
     Returns:
         pd.DataFrame: An uppercase dataframe
