@@ -64,8 +64,10 @@ jobs:
         run: terraform validate -no-color
       - name: Setup Terraform Parameters
         working-directory: ./terraform
+        env:
+          GCLOUD_SERVICE_KEY_RAW: ${{ secrets.GCLOUD_SERVICE_KEY_RAW }}
         run: |
-          echo ${{ secrets.GCLOUD_SERVICE_KEY }} > credentials.json
+          echo "${GCLOUD_SERVICE_KEY_RAW}" > credentials.json
           echo 'docker_worker_image_digest="us.gcr.io/sumz-laboratorios/kedro-devops"' > config.tfvars
       - name: Terraform Apply
         working-directory: ./terraform
