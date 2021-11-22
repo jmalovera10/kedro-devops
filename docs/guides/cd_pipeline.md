@@ -341,14 +341,71 @@ In order for the CD pipeline to run you need to be in the `main` branch and then
 
 ## Exercise 2: Define and deploy infrastructure as code (IaC) with Terraform
 
-Install Terraform
-Enable GCP Compute Engine API
-Create a main Terraform file
-Terraform init
+### 2.1: Setting up Terraform
+
+First you need to install [Terraform](https://www.terraform.io/downloads.html) in your device. For this exercise we are using `v1.0.8`. After this we are going to create the `terraform` folder in the root of our project and then we are going to create a `terraform/main.tf` file. In this file we are going to define the main Terraform configurations that will allow us to create the infrastructure in GCP. The content of the `terraform/main.tf` file are the following:
+
+```hcl
+provider "google" {
+  project     = "YOUR_GCP_PROJECT"
+  region      = "us-east1"
+  zone        = "us-east1-b"
+  credentials = file("credentials.json")
+}
+```
+
+Then we need to create a `terraform/credentials.json` file with our GCP service account key. This will allow us to connect our Terraform client with our GCP project. However, we don't want that any sensitive information is pushed to our repository, so we are going to add a `terraform/.gitignore` file that will prevent this:
+
+```properties
+credentials.json
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Exclude all .tfvars files, which are likely to contain sentitive data, such as
+# password, private keys, and other secrets. These should not be part of version
+# control as they are data points which are potentially sensitive and subject
+# to change depending on the environment.
+#
+*.tfvars
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+#
+# !example_override.tf
+
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+# example: *tfplan*
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+```
+
+After this we are going to initialize Terraform with the required libraries to communicate with GCP. So inside the `terraform` directory execute:
+
+```bash
+terraform init
+```
+
 Create a new Terraform workspace
 Create a Terraform network reference file
 Create a Terraform kedro file
 Create a Terraform variables file
+Enable GCP Compute Engine API
 Add Compute Instance Admin (v1) role to service account
 - Compute Instance Admin (v1)
 Add devops service account as owner of the compute service account
