@@ -22,7 +22,7 @@ resource "google_compute_instance" "kedro" {
   }
 
   metadata_startup_script = <<EOT
-  echo "Starting image ${var.docker_communications_worker_image_digest}"
+  echo "Starting image ${var.docker_worker_image_digest}"
   EOT
 
   metadata = {
