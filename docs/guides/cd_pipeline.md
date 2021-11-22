@@ -341,6 +341,9 @@ In order for the CD pipeline to run you need to be in the `main` branch and then
 
 ## Exercise 2: Define and deploy infrastructure as code (IaC) with Terraform
 
+In this exercise we are going to deploy our Kedro pipeline to a GCE instance using Terraform and GitHub Actions.
+
+![exercise-2-diagram](assets/exercise-2-diagram.png)
 ### 2.1: Setting up Terraform
 
 First you need to install [Terraform](https://www.terraform.io/downloads.html) in your device. For this exercise we are using `v1.0.8`. After this we are going to create the `terraform` folder in the root of our project and then we are going to create a `terraform/main.tf` file. In this file we are going to define the main Terraform configurations that will allow us to create the infrastructure in GCP. The content of the `terraform/main.tf` file are the following:
@@ -401,16 +404,30 @@ After this we are going to initialize Terraform with the required libraries to c
 terraform init
 ```
 
-Create a new Terraform workspace
+Terraform allows you to create different environments or **workspaces** to manage different code stages such as development and production. In this case we are going to create a custom workspace that is going to be named as you want.
+
+```bash
+terraform workspace new my-workspace
+```
+
 Create a Terraform network reference file
 Create a Terraform kedro file
 Create a Terraform variables file
+
+### 2.2: Configure GCP Permissions
+
 Enable GCP Compute Engine API
 Add Compute Instance Admin (v1) role to service account
 - Compute Instance Admin (v1)
 Add devops service account as owner of the compute service account
+
+### 2.3: Deploy the Infrastructure
+
 Terraform format
 Terraform validate
 Terraform plan
 Terraform apply
+
+### 2.4: Configure the Deployment in the Pipeline
+
 Create Terraform job in pipeline
