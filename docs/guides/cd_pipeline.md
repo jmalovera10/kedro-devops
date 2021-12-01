@@ -348,7 +348,7 @@ In this exercise we are going to deploy our Kedro pipeline to a GCE instance usi
 
 First you need to install [Terraform](https://www.terraform.io/downloads.html) in your device. For this exercise we are using `v1.0.8`. After this we are going to create the `terraform` folder in the root of our project and then we are going to create a `terraform/main.tf` file. In this file we are going to define the main Terraform configurations that will allow us to create the infrastructure in GCP. The content of the `terraform/main.tf` file are the following:
 
-```hcl
+```properties
 provider "google" {
   project     = "YOUR_GCP_PROJECT"
   region      = "us-east1"
@@ -410,9 +410,96 @@ Terraform allows you to create different environments or **workspaces** to manag
 terraform workspace new my-workspace
 ```
 
-Create a Terraform network reference file
-Create a Terraform kedro file
-Create a Terraform variables file
+Now we are going to create our network file that is going to retrieve the necessary VPC and subnet information. The contents of the `terraform/network.tf` file are the following:
+
+```properties
+data "google_compute_network" "default" {
+  name = "default"
+}
+```
+
+This is going to retrieve the default VPC reference from GCP, for us to associate it to our new instance.
+
+Now we are going to define our Terraform file that is going to create the instance. The contents of the `terraform/instance.tf` file are the following:
+
+```properties
+# Reference to the default compute engine service account. Replace the placeholder
+# with the of the compute engine default service account that you find in
+# https://console.cloud.google.com/iam-admin/serviceaccounts?project=YOUR_GCP_PROJECT
+data "google_service_account" "default_compute_sa" {
+  account_id = "DEFAULT_ACCOUNT_ID"
+}
+
+resource "google_compute_instance" "kedro" {
+  name                      = "kedro"
+  machine_type              = "e2-micro"
+  allow_stopping_for_update = true
+
+  # Defintion of disk specifications
+  boot_disk {
+    initialize_params {
+      size  = 20
+      # This type of image is specialized for containers and will help us run our 
+      # kedro container
+      image = "cos-cloud/cos-89-lts"
+    }
+  }
+
+  network_interface {
+    # Here we are referencing our network information from our network.tf file
+    network = data.google_compute_network.default.name
+
+    access_config {
+    }
+  }
+
+  # The purpose of this script is to recreate the instance every time there are changes 
+  # on our definition. It is a workaround to a synchronization issue that Terraform has 
+  # with the GCP API.
+  metadata_startup_script = <<EOT
+  echo "Starting image ${var.docker_worker_image_digest}"
+  EOT
+
+  metadata = {
+    # This multiline container declaration is structured as a Kubernetes YAML file.
+    # The overall purpose is to create a single pod with the image we created and 
+    # add a restart policy to respond to unexpected failures in the container.
+    gce-container-declaration = <<EOT
+    kind: Deployment
+    metadata:
+      name: kedro-pod
+      labels:
+        tier: kedro
+    spec:
+      containers:
+        - name: kedro-service
+          image: ${var.docker_worker_image_digest}
+          stdin: false
+          restartPolicy: Always
+    EOT
+  }
+
+  # Here we are defining the service account that our instance will have in order
+  # to access GCP APIs. By default, te instance will use the default compute service account
+  service_account {
+    # Google recommends custom service accounts that have cloud-platform scope 
+    # and permissions granted via IAM Roles.
+    email  = data.google_service_account.default_compute_sa.email
+    scopes = ["cloud-platform"]
+  }
+}
+```
+
+Last, we need to specify a file that is going to be responsible to define the variables that Terraform is going to need to deploy the infrastructure. For now we only have the `docker_worker_image_digest` variable but in the future you can parametrize any variable you need such as secrets, IP addresses, etc. Now we are going to write a `terraform/variables.tf` file with the following content:
+
+```properties
+variable "docker_worker_image_digest" {
+  type        = string
+  description = "The digest of the image generated for the worker after being pushed into GCR"
+}
+```
+
+Bear in mind that you can set default values for your variables in case you need them. 
 
 ### 2.2: Configure GCP Permissions
 
@@ -423,8 +510,15 @@ Add devops service account as owner of the compute service account
 
 ### 2.3: Deploy the Infrastructure
 
-Terraform format
-Terraform validate
+To deploy our infrastructure, first we need to be sure that our Terraform configuration files are clean and valid, so we are going to execute:
+
+```bash
+# Format Terraform's configuration files
+terraform fmt
+# Validate Terraform's configuration files
+terraform validate
+```
+
 Terraform plan
 Terraform apply
 
