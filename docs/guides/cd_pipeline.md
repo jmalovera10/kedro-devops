@@ -503,7 +503,10 @@ Bear in mind that you can set default values for your variables in case you need
 
 ### 2.2: Configure GCP Permissions
 
-Enable GCP Compute Engine API
+First we need to enable the GCE API for our project that can be done by entering to your GCP console and navigating to the APIs tab. Then search for the `Compute Engine` API and enable it. You can click in [this link](https://console.cloud.google.com/apis/library/compute.googleapis.com) to get directly to the GCE API permissions. Something like this should appear if the API has been enabled:
+
+![gce-api-enabled](assets/gce-api.png)
+
 Add Compute Instance Admin (v1) role to service account
 - Compute Instance Admin (v1)
 Add devops service account as owner of the compute service account
@@ -519,9 +522,67 @@ terraform fmt
 terraform validate
 ```
 
-Terraform plan
-Terraform apply
+Now we are going to review our deployment plan and apply the changes to GCP, but first recall that we need an input variable called `docker_worker_image_digest`, so we are going to define a new file `terraform/input.tfvars` that is going to store the digest of the image that we pushed GCR in the last exercise:
+
+```properties
+docker_worker_image_digest = "URL_TO_YOUR_IMAGE_DIGEST"
+```
+After this, everything is set up for us to deploy our infrastructure. Now lets execute:
+
+```bash
+# Expose Terraform's deployment plan that is going to be applied to GCP
+terraform plan --var-file=input.tfvars
+
+# Execute the deployment plan to GCP
+# When prompted, accept the deployment execution
+terraform apply --var-file=input.tfvars
+```
+
+When the deployment is done, you will see the VM running in GCE. If you want to check that the pipeline is up and running, you can ssh into the VM and then connect to the Docker container.
+
+```bash
+# Inside the GCE VM you can execute this commands
+
+# List the running containers
+docker ps
+
+# Connect to the container
+docker exec -it CONTAINER_NAME /bin/bash
+```
 
 ### 2.4: Configure the Deployment in the Pipeline
 
-Create Terraform job in pipeline
+Up to this point we have all the necessary configurations set to automate our CD workflow. Now what is left to do is to configure the deployment in the pipeline. For this we are going to add another step to the CD pipeline inside the `.github/workflows/cd_pipeline.yml` file as follows.
+
+```yaml
+  ...
+
+  deploy-infrastructure:
+    runs-on: ubuntu-latest
+    needs: [build-and-push-container]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.8
+          terraform_plugins: yes
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
+      - name: Terraform Validate
+        run: terraform validate -no-color
+      - name: Setup Terraform Parameters
+        working-directory: ./terraform
+        env:
+          GCLOUD_SERVICE_KEY_RAW: ${{ secrets.GCLOUD_SERVICE_KEY_RAW }}
+        run: |
+          echo "${GCLOUD_SERVICE_KEY_RAW}" > credentials.json
+          echo 'docker_worker_image_digest="us.gcr.io/sumz-laboratorios/kedro-devops"' > config.tfvars
+      - name: Terraform Apply
+        working-directory: ./terraform
+        run: terraform apply -var-file="config.tfvars" -auto-approve
+```
+
+Now if you push the changes to GitHub, the pipeline will be executed and if all goes well, in the actions tab of you repository you will see the following:
+
+![cd-pipeline-result-terraform](assets/cd-pipeline-result-terraform.png)
