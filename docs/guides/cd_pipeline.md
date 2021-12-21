@@ -341,7 +341,7 @@ In order for the CD pipeline to run you need to be in the `main` branch and then
 
 ## Exercise 2: Define and deploy infrastructure as code (IaC) with Terraform
 
-In this exercise we are going to deploy our Kedro pipeline to a GCE instance using Terraform and GitHub Actions.
+In this exercise we are going to deploy our Kedro pipeline to a GCE instance using Terraform and GitHub Actions. To work on the skeleton of this exercise you can clone or fork the repository and start working on the `exercises/03-cd-pipeline-terraform` branch.
 
 ![exercise-2-diagram](assets/exercise-2-diagram.png)
 ### 2.1: Setting up Terraform
